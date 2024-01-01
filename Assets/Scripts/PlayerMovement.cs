@@ -21,26 +21,26 @@ public class PlayerMovement : MonoBehaviour
 		MoveMultiplier = 1.0f;
 	}
 
-	public void UpdateMovement(string actionName, dynamic dataType)
+	public void UpdateMovement(string actionName, dynamic inputData)
 	{
 		switch (actionName)
 		{
 			case "Jump":
-				if (dataType == 1)
+				if (inputData == 1)
 					isJump = true;
 				else
 					isJump = false;
 				break;
 
 			case "Sprint":
-				if (dataType == 1)
+				if (inputData == 1)
 					isSprint = true;
 				else
 					isSprint = false;
 				break;
 
 			case "Walk":
-				MoveForce = dataType;
+				MoveForce = inputData;
 				break;
 
 			default:

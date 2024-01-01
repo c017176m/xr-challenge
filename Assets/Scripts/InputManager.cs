@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class InputManager : MonoBehaviour
 {
-	public delegate void Delegate_RecognisedInput(string actionName, dynamic data);
+	public delegate void Delegate_RecognisedInput(string actionName, dynamic inputData);
 	public static event Delegate_RecognisedInput Event_RecognisedInput;
 	
 	private PlayerInput PlayerInput;
