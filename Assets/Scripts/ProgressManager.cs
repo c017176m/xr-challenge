@@ -6,7 +6,6 @@ public class ProgressManager : MonoBehaviour
 {
 	[SerializeField]
 	private int matchScore;
-	public int MatchScore => matchScore;
 
 	private void Start()
 	{
