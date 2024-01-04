@@ -17,6 +17,8 @@ public class GuiManager : MonoBehaviour
 	[SerializeField]
 	private List<Transform> GUIChildren;
 
+	private Transform ScoreTextGOTextReference;
+
 	private void Start()
 	{
 		GuiChildCount = GUI.transform.childCount;
@@ -24,11 +26,11 @@ public class GuiManager : MonoBehaviour
 		{
 			GUIChildren.Add(GUI.transform.GetChild(i));
 		}
+		ScoreTextGOTextReference = GUIChildren.FirstOrDefault(obj => obj.name == "ScoreText");
 	}
 
-	void UpdateDisplayScore(int data)
+	public void UpdateDisplayScore(int data)
 	{
-		Transform ScoreTextGOReference = GUIChildren.FirstOrDefault(obj => obj.name == "ScoreText");
-		ScoreTextGOReference.gameObject.GetComponent<TextMeshProUGUI>().text = ("SCORE: " + data.ToString());
+		ScoreTextGOTextReference.gameObject.GetComponent<TextMeshProUGUI>().text = ("SCORE: " + data.ToString());
 	}
 }

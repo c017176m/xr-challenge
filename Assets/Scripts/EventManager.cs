@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EventManager : MonoBehaviour
@@ -12,6 +13,9 @@ public class EventManager : MonoBehaviour
 	[SerializeField]
 	private GameObject ProgressManagerGO;
 
+	[SerializeField]
+	private GameObject GuiManagerGO;
+
 	[Header("Automatic Connections")]
 	[SerializeField]
 	private PlayerMovement Script_PlayerMovement;
@@ -19,18 +23,24 @@ public class EventManager : MonoBehaviour
 	[SerializeField]
 	private ProgressManager Script_ProgressManager;
 
+	[SerializeField]
+	private GuiManager Script_GuiManager;
+
 
 	//Connect senders and receivers
 	private void Awake()
 	{
 		InputManager.Event_RecognisedInput += RecognisedInput_Response;
 		PlayerCollisions.Event_TriggerEnter += TriggerEnter_Response;
+		ProgressManager.Event_UpdateScoreDisplay += UpdateScoreDisplay_Response;
 	}
 
 	private void Start()
 	{
 		Script_PlayerMovement = PlayerGO.GetComponent<PlayerMovement>();
 		Script_ProgressManager = ProgressManagerGO.GetComponent<ProgressManager>();
+		Script_GuiManager = GuiManagerGO.GetComponent<GuiManager>();
+
 	}
 
 	//Disconnect senders and recievers
@@ -38,9 +48,8 @@ public class EventManager : MonoBehaviour
 	{
 		InputManager.Event_RecognisedInput -= RecognisedInput_Response;
 		PlayerCollisions.Event_TriggerEnter -= TriggerEnter_Response;
+		ProgressManager.Event_UpdateScoreDisplay -= UpdateScoreDisplay_Response;
 	}
-
-
 
 	void RecognisedInput_Response(string actionName, dynamic inputData)
 	{
@@ -51,5 +60,10 @@ public class EventManager : MonoBehaviour
 	{
 		int carriedScore = impactedGO.GetComponent<Pickup>().GetPickedUp();
 		Script_ProgressManager.UpdateScore(carriedScore);
+	}
+
+	void UpdateScoreDisplay_Response(int scoreToDisplay)
+	{
+		Script_GuiManager.UpdateDisplayScore(scoreToDisplay);
 	}
 }
