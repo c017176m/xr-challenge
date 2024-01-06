@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCollisions : MonoBehaviour
 {
 	public delegate void Delegate_TriggerEnter(GameObject responsibleGO, GameObject impactedGO);
+	public delegate void Delegate_TriggerEnter(GameObject responsibleGO, GameObject impactedGO, TagTypes enumOfTag);
 	public static event Delegate_TriggerEnter Event_TriggerEnter;
 
     public enum TagTypes
@@ -23,6 +24,7 @@ public class PlayerCollisions : MonoBehaviour
 				{
 					Debug.Log("Hit a Pickup!");
 					Event_TriggerEnter(gameObject, other.gameObject);
+					Event_TriggerEnter(gameObject, other.gameObject, TagTypes.Pickup);
 					break;
 				}
 				break;
