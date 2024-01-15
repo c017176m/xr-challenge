@@ -20,4 +20,11 @@ public class ProgressManager : MonoBehaviour
 		matchScore += scoreGained;
 		Event_UpdateScoreDisplay(matchScore);
 	}
+
+	public void CueFinish()
+	{
+		Debug.Log("Finish function runs woohoo");
+	}
+
+
 }

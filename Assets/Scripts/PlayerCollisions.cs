@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class PlayerCollisions : MonoBehaviour
 {
-	public delegate void Delegate_TriggerEnter(GameObject responsibleGO, GameObject impactedGO);
+	//public delegate void Delegate_TriggerEnter(GameObject responsibleGO, GameObject impactedGO);
 	public delegate void Delegate_TriggerEnter(GameObject responsibleGO, GameObject impactedGO, TagTypes enumOfTag);
 	public static event Delegate_TriggerEnter Event_TriggerEnter;
 
     public enum TagTypes
     {
 		Pickup,
-        Finish
+        Finish,
+		Unknown
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,14 +24,18 @@ public class PlayerCollisions : MonoBehaviour
 				if (other.gameObject.GetComponent<Pickup>().IsCollected == false)
 				{
 					Debug.Log("Hit a Pickup!");
-					Event_TriggerEnter(gameObject, other.gameObject);
+					//Event_TriggerEnter(gameObject, other.gameObject);
 					Event_TriggerEnter(gameObject, other.gameObject, TagTypes.Pickup);
 					break;
 				}
 				break;
 			case "Finish":
 				Debug.Log("Hit a Finish!");
-				Event_TriggerEnter(gameObject, other.gameObject);
+				//Event_TriggerEnter(gameObject, other.gameObject);
+				Event_TriggerEnter(gameObject, other.gameObject, TagTypes.Finish);
+				break;
+			default:
+				Debug.LogWarning("No tag associated with gameObject: " + other.gameObject);
 				break;
 		}
 	}
