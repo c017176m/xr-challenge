@@ -25,10 +25,17 @@ public class ProgressManager : MonoBehaviour
 
 	public void CueFinish()
 	{
+		int collectedCount = 0;
 		for (int i = 0; i < pickups.Length; i++)
 		{
-			if (pickups[i].IsCollected == false) { break; }
-			Debug.Log("If you see this you got all pickups and hit the finish!");
+			Debug.Log(pickups[i] + " " + pickups[i].IsCollected + " " + i);
+			if (pickups[i].IsCollected == false) { continue; }
+			collectedCount++;
+
+		}
+		if (collectedCount >= pickups.Length)
+		{
+			Debug.Log("Win");
 		}
 	}
 
