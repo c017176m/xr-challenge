@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
 				break;
 
 			default:
-				Debug.Log("No valid input type");
+				Debug.Log($"No valid input type during input sorting in {this.GetType()} ");
 				break;
 
 		}

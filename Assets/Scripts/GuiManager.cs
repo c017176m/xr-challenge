@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,22 +16,69 @@ public class GuiManager : MonoBehaviour
 	private int GuiChildCount;
 
 	[SerializeField]
-	private List<Transform> GUIChildren;
+	private List<GameObject> GUIStrangers;
 
-	private Transform ScoreTextGOTextReference;
+	[SerializeField] private GameObject ScoreTextGOTextReference, WinTextGOTextReference, GameScreenGOReference, WinScreenGOReference;
 
+	private void Awake()
+	{
+		foreach (Transform transformComponent in GUI.transform.GetComponentsInChildren<Transform>(true))
+		{
+			GUIStrangers.Add(transformComponent.gameObject);
+		}
+		for (int i = 0; i < GUIStrangers.Count; i++)
+		{
+			switch (GUIStrangers[i].name.ToString().ToLower())
+			{
+				case "scoretext":
+					ScoreTextGOTextReference = GUIStrangers[i];
+					break;
+				case "gamescreen":
+					GameScreenGOReference = GUIStrangers[i];
+					break;
+				case "winscreen":
+					WinScreenGOReference = GUIStrangers[i];
+					break;
+				case "winmessagesubtext":
+					WinTextGOTextReference = GUIStrangers[i];
+					break;
+				default:
+					break;
+
+			}
+		}
+	}
 	private void Start()
 	{
-		GuiChildCount = GUI.transform.childCount;
-		for (int i = 0; i < GuiChildCount; i++)
+		//Set all GUIs to disabled then GUI most-parent to enabled
+		foreach (Transform transformComponent in GUI.transform.GetComponentsInChildren<Transform>(true))
 		{
-			GUIChildren.Add(GUI.transform.GetChild(i));
+			transformComponent.gameObject.SetActive(false);
 		}
-		ScoreTextGOTextReference = GUIChildren.FirstOrDefault(obj => obj.name == "ScoreText");
+		GUI.SetActive(true);
+
+		//Set all game screen objects to enabled
+		foreach (Transform transformComponent in GameScreenGOReference.transform.GetComponentsInChildren<Transform>(true))
+		{
+			transformComponent.gameObject.SetActive(true);
+		}
 	}
 
 	public void UpdateDisplayScore(int data)
 	{
-		ScoreTextGOTextReference.gameObject.GetComponent<TextMeshProUGUI>().text = ("SCORE: " + data.ToString());
+		ScoreTextGOTextReference.GetComponent<TextMeshProUGUI>().text = ($"SCORE: {data} ");
+	}
+
+	public void CueFinishDisplay(int finalScore)
+	{
+		GameScreenGOReference.SetActive(false);
+
+		WinTextGOTextReference.GetComponent<TextMeshProUGUI>().text = ($"final score: {finalScore} ");
+		
+		//Set all win screen objects to enabled
+		foreach (Transform transformComponent in WinScreenGOReference.transform.GetComponentsInChildren<Transform>(true))
+		{
+			transformComponent.gameObject.SetActive(true);
+		}
 	}
 }

@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerCollisions : MonoBehaviour
 {
 	//public delegate void Delegate_TriggerEnter(GameObject responsibleGO, GameObject impactedGO);
-	public delegate void Delegate_TriggerEnter(GameObject responsibleGO, GameObject impactedGO, TagTypes enumOfTag);
-	public static event Delegate_TriggerEnter Event_TriggerEnter;
+	internal delegate void Delegate_TriggerEnter(GameObject responsibleGO, GameObject impactedGO, TagTypes enumOfTag);
+	internal static event Delegate_TriggerEnter Event_TriggerEnter;
 
 	//An enum where we can add expected collision types
-    public enum TagTypes
+    internal enum TagTypes
     {
 		Pickup,
         Finish,
@@ -18,7 +18,7 @@ public class PlayerCollisions : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
 	{
-		Debug.Log("Object hit! is " + other.gameObject.tag);
+		Debug.Log($"Object hit! is {other.gameObject.tag} ");
 
 		//Let's first see if there's a tag on the other object
 		switch (other.gameObject.tag)
@@ -50,7 +50,7 @@ public class PlayerCollisions : MonoBehaviour
 				break;
 
 			default:
-				Debug.LogWarning("No tag associated with gameObject: " + other.gameObject);
+				Debug.LogWarning($"No tag associated with gameObject: {other.gameObject} ");
 				break;
 		}
 	}
