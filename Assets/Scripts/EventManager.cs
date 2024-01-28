@@ -26,7 +26,6 @@ public class EventManager : MonoBehaviour
 	[SerializeField]
 	private GuiManager Script_GuiManager;
 
-
 	//Connect remote senders to(+=) current receivers
 	private void Awake()
 	{
