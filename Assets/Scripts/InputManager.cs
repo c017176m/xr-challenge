@@ -21,7 +21,6 @@ public class InputManager : MonoBehaviour
 	{
 
 		//Reminds what input map you have selected in editor
-		PlayerInput.SwitchCurrentActionMap("RH_Movement");
 		Debug.Log($"Current Action Map is: {PlayerInput.currentActionMap.name} ");
 
 		/*

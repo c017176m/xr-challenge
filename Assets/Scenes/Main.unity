@@ -1547,7 +1547,7 @@ MonoBehaviour:
     m_ActionName: LH_Movement/Sprint[/Keyboard/rightShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: RH_Movement
+  m_DefaultActionMap: LH_Movement
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 534669904}
 --- !u!4 &929406610

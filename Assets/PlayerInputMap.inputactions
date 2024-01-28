@@ -156,6 +156,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "HorizontalCamRotation",
+                    "type": "Value",
+                    "id": "d9a49cc6-018d-4943-9f1b-6d89f2bcb8b2",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -233,6 +241,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8ef0be91-c37e-49ff-8b9c-bcbb16b66c3f",
+                    "path": "<Mouse>/delta/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HorizontalCamRotation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
