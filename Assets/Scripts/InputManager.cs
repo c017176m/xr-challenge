@@ -7,9 +7,9 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class InputManager : MonoBehaviour
 {
-	public delegate void Delegate_RecognisedInput(string actionName, dynamic inputData);
-	public static event Delegate_RecognisedInput Event_RecognisedInput;
-	
+	internal delegate void Delegate_RecognisedInput(string actionName, dynamic inputData);
+	internal static event Delegate_RecognisedInput Event_RecognisedInput;
+
 	private PlayerInput PlayerInput;
 
 	private void Awake()
@@ -22,7 +22,7 @@ public class InputManager : MonoBehaviour
 
 		//Reminds what input map you have selected in editor
 		PlayerInput.SwitchCurrentActionMap("RH_Movement");
-		Debug.Log("Current Action Map is: " + PlayerInput.currentActionMap.name);
+		Debug.Log($"Current Action Map is: {PlayerInput.currentActionMap.name} ");
 
 		/*
 		 * These subscribe (successful inputs understood inside the input 
@@ -42,38 +42,38 @@ public class InputManager : MonoBehaviour
 
 	}
 
-	//private void OnDisable()
-	//{
+	private void OnDisable()
+	{
 
-	//	/*
-	//	 * These unsubscribe the existing inputs defined above. Unsubscribing is
-	//	 * not automatic, therefore needs manual clean-up when the gameObject 
-	//	 * is disabled
-	//	 */
+		/*
+		 * These unsubscribe the existing inputs defined above. Unsubscribing is
+		 * not automatic, therefore needs manual clean-up when the gameObject 
+		 * is disabled
+		 */
 
-	//	PlayerInput.currentActionMap["Walk"].performed -= Detected_Input;
-	//	PlayerInput.currentActionMap["Walk"].canceled -= Detected_Input;
+		PlayerInput.currentActionMap["Walk"].performed -= Detected_Input;
+		PlayerInput.currentActionMap["Walk"].canceled -= Detected_Input;
 
-	//	PlayerInput.currentActionMap["Sprint"].performed -= Detected_Input;
-	//	PlayerInput.currentActionMap["Sprint"].canceled -= Detected_Input;
+		PlayerInput.currentActionMap["Sprint"].performed -= Detected_Input;
+		PlayerInput.currentActionMap["Sprint"].canceled -= Detected_Input;
 
-	//	PlayerInput.currentActionMap["Jump"].performed -= Detected_Input;
-	//	PlayerInput.currentActionMap["Jump"].canceled -= Detected_Input;
+		PlayerInput.currentActionMap["Jump"].performed -= Detected_Input;
+		PlayerInput.currentActionMap["Jump"].canceled -= Detected_Input;
 
 		PlayerInput.currentActionMap["HorizontalCamRotation"].performed -= Detected_Input;
 		PlayerInput.currentActionMap["HorizontalCamRotation"].canceled -= Detected_Input;
 
 		Debug.Log($"Input Actions successfully unsubscribed on {this.gameObject} ");
 
-	//}
+	}
 
 	private void OnApplicationQuit()
 	{
 
 		/*
-			* A last resort which kicks in if the movement events don't 
-			* unsubscribe properly
-			*/
+		* A last resort which kicks in if the movement events don't 
+		* unsubscribe properly
+		*/
 		PlayerInput.currentActionMap["Walk"].performed -= Detected_Input;
 		PlayerInput.currentActionMap["Walk"].canceled -= Detected_Input;
 
@@ -91,7 +91,6 @@ public class InputManager : MonoBehaviour
 
 	private void Detected_Input(InputAction.CallbackContext actionContext)
 	{
-
 		switch (actionContext.action.name)
 		{
 			case "Jump":
@@ -107,9 +106,8 @@ public class InputManager : MonoBehaviour
 				Event_RecognisedInput(actionContext.action.name, actionContext.ReadValue<float>());
 				break;
 			default:
-				Debug.Log("No valid input type");
+				Debug.Log($"No valid input type in {this.GetType()} ");
 				break;
 		}
-
 	}
 }

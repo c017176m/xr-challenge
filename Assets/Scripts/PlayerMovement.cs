@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
 		MoveMultiplier = 10.0f;
 		MoveSpeedCap = 3.0f;
 		TurnMultiplier = 50.0f;
+		DistanceOfGroundRaycast = 0.7f;
 	}
 
 	private void Start()

@@ -7,11 +7,12 @@ public class ProgressManager : MonoBehaviour
 	[SerializeField]
 	private int matchScore;
 
+	[SerializeField]
 	private Pickup[] pickups = null;
 
-	internal delegate void Delegate_UpdateScoreDisplay(int scoreToDisplay);
-	internal static event Delegate_UpdateScoreDisplay Event_UpdateScoreDisplay;
-	internal static event Delegate_UpdateScoreDisplay Event_TriggerEndRound;
+	internal delegate void Delegate_SingleIntDelegate(int scoreToDisplay);
+	internal static event Delegate_SingleIntDelegate Event_UpdateScoreDisplay;
+	internal static event Delegate_SingleIntDelegate Event_TriggerEndRound;
 
 	private void Start()
 	{

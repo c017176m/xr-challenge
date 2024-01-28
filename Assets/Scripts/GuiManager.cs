@@ -1,3 +1,5 @@
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,20 +9,24 @@ using UnityEngine;
 public class GuiManager : MonoBehaviour
 {
 	[Header("Requires Manual Connections via Heirarchy")]
-	[SerializeField] private GameObject
+	[SerializeField]
+	private GameObject
 		GUI;
 
 	[Header("Automatic Connections")]
-	[SerializeField] private int
+	[SerializeField]
+	private int
 		GuiChildCount;
 
-	[SerializeField] private List<GameObject>
+	[SerializeField]
+	private List<GameObject>
 		GUIStrangers;
 
-	[SerializeField] private GameObject
-		ScoreTextGOTextReference, 
-		WinTextGOTextReference, 
-		GameScreenGOReference, 
+	[SerializeField]
+	private GameObject
+		ScoreTextGOTextReference,
+		WinTextGOTextReference,
+		GameScreenGOReference,
 		WinScreenGOReference;
 
 	private void Awake()
@@ -53,16 +59,38 @@ public class GuiManager : MonoBehaviour
 	}
 	private void Start()
 	{
-		GuiChildCount = GUI.transform.childCount;
-		for (int i = 0; i < GuiChildCount; i++)
+		//Set all GUIs to disabled then GUI most-parent to enabled
+		foreach (Transform transformComponent in GUI.transform.GetComponentsInChildren<Transform>(true))
 		{
-			GUIChildren.Add(GUI.transform.GetChild(i));
+			transformComponent.gameObject.SetActive(false);
 		}
-		ScoreTextGOTextReference = GUIChildren.FirstOrDefault(obj => obj.name == "ScoreText");
+		GUI.SetActive(true);
+
+		//Set all game screen objects to enabled
+		foreach (Transform transformComponent in GameScreenGOReference.transform.GetComponentsInChildren<Transform>(true))
+		{
+			transformComponent.gameObject.SetActive(true);
+		}
 	}
 
 	public void UpdateDisplayScore(int data)
 	{
-		ScoreTextGOTextReference.gameObject.GetComponent<TextMeshProUGUI>().text = ("SCORE: " + data.ToString());
+		ScoreTextGOTextReference.GetComponent<TextMeshProUGUI>().text = ($"SCORE: {data} ");
+	}
+
+	public void CueFinishDisplay(int finalScore)
+	{
+		GameScreenGOReference.SetActive(false);
+
+		WinTextGOTextReference.GetComponent<TextMeshProUGUI>().text = ($"final score: {finalScore} ");
+
+		//Set all win screen objects to enabled
+		foreach (Transform transformComponent in WinScreenGOReference.transform.GetComponentsInChildren<Transform>(true))
+		{
+			transformComponent.gameObject.SetActive(true);
+		}
 	}
 }
+
+
+
