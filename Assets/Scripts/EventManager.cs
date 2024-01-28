@@ -66,4 +66,10 @@ public class EventManager : MonoBehaviour
 	{
 		Script_GuiManager.UpdateDisplayScore(scoreToDisplay);
 	}
+
+	//Function to respond to a successful end round/level trigger calculated by ProgressManager
+	void TriggerEndRound_Response(int finalScore)
+	{
+		Script_GuiManager.CueFinishDisplay(finalScore);
+	}
 }

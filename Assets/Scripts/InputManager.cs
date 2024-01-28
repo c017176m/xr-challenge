@@ -37,6 +37,9 @@ public class InputManager : MonoBehaviour
 		PlayerInput.currentActionMap["Jump"].performed += Detected_Input;
 		PlayerInput.currentActionMap["Jump"].canceled += Detected_Input;
 
+		PlayerInput.currentActionMap["HorizontalCamRotation"].performed += Detected_Input;
+		PlayerInput.currentActionMap["HorizontalCamRotation"].canceled += Detected_Input;
+
 	}
 
 	//private void OnDisable()
@@ -57,7 +60,10 @@ public class InputManager : MonoBehaviour
 	//	PlayerInput.currentActionMap["Jump"].performed -= Detected_Input;
 	//	PlayerInput.currentActionMap["Jump"].canceled -= Detected_Input;
 
-	//	Debug.Log("Input Actions successfully unsubscribed on " + this.gameObject);
+		PlayerInput.currentActionMap["HorizontalCamRotation"].performed -= Detected_Input;
+		PlayerInput.currentActionMap["HorizontalCamRotation"].canceled -= Detected_Input;
+
+		Debug.Log($"Input Actions successfully unsubscribed on {this.gameObject} ");
 
 	//}
 
@@ -77,8 +83,10 @@ public class InputManager : MonoBehaviour
 		PlayerInput.currentActionMap["Jump"].performed -= Detected_Input;
 		PlayerInput.currentActionMap["Jump"].canceled -= Detected_Input;
 
-		Debug.LogWarning("Input Actions failed to un-subscribe on " + this.gameObject + ". They have been un-subscribed using OnApplicationQuit()");
+		PlayerInput.currentActionMap["HorizontalCamRotation"].performed -= Detected_Input;
+		PlayerInput.currentActionMap["HorizontalCamRotation"].canceled -= Detected_Input;
 
+		Debug.LogWarning($"Input Actions failed to un-subscribe on {this.gameObject}. They have been un-subscribed using OnApplicationQuit()");
 	}
 
 	private void Detected_Input(InputAction.CallbackContext actionContext)
@@ -94,6 +102,9 @@ public class InputManager : MonoBehaviour
 				break;
 			case "Walk":
 				Event_RecognisedInput(actionContext.action.name, actionContext.ReadValue<Vector2>());
+				break;
+			case "HorizontalCamRotation":
+				Event_RecognisedInput(actionContext.action.name, actionContext.ReadValue<float>());
 				break;
 			default:
 				Debug.Log("No valid input type");
